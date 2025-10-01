@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Omega",
+  "version": "0.0.5",
+  "description": "AI Side Panel Summarizer (Webpages only)",
+  "permissions": ["sidePanel", "tabs", "scripting", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "Omega"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
