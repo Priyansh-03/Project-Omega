@@ -1,16 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Omega Side Panel</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 10px; }
-    button { margin-bottom: 10px; padding: 6px 12px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; }
+    :root {
+      --bg-color: #0b0c10;
+      --panel-bg: rgba(15, 22, 28, 0.85);
+      --accent: #45a29e;
+      --text-light: #c5c6c7;
+      --text-bright: #66fcf1;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      position: relative;
+      height: 100vh;
+      margin: 0;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    /* Background image dimmed */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("image/bgom.jpg") no-repeat center center;
+      background-size: cover;
+      filter: brightness(40%);
+      z-index: -1;
+    }
+
+    h2 {
+      color: var(--text-bright);
+      text-align: center;
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px #45a29e;
+    }
+
+    button {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: var(--text-bright);
+      transform: scale(1.05);
+    }
+
+    #output {
+      background-color: var(--panel-bg);
+      padding: 12px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-top: 10px;
+      min-height: 100px;
+      border: 1px solid #2c3e50;
+      transition: all 0.3s ease;
+      overflow-y: auto;
+      color: #ffffff; /* White text */
+    }
+
+    hr {
+      margin: 20px 0;
+      border: 0;
+      border-top: 1px solid #3c3c3c;
+    }
+
+    /* ========================== */
+    /* 💬 ASK QUESTION SECTION   */
+    /* ========================== */
+    .ask-wrapper {
+      margin-top: auto;
+      background: rgba(15, 22, 28, 0.85);
+      border: 1px solid #2c3e50;
+      border-radius: 10px;
+      padding: 12px;
+      backdrop-filter: blur(8px);
+    }
+
+    #questionInput {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background-color: #111;
+      color: var(--text-light);
+      resize: none;
+      font-size: 14px;
+      padding: 10px;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    #questionInput:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .ask-row {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    #askBtn {
+      margin-left: 10px;
+      padding: 10px 16px;
+      flex-shrink: 0;
+    }
+
+    #answerSection {
+      background-color: var(--panel-bg);
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px solid #2c3e50;
+      display: none;
+      transition: all 0.3s ease;
+    }
+
+    #answerSection h4 {
+      color: var(--text-bright);
+      margin-top: 0;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    /* Scrollbar styling */
+    #output::-webkit-scrollbar {
+      width: 6px;
+    }
+    #output::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
   </style>
 </head>
 <body>
-  <button id="summarizeBtn">Summarize Page</button>
-  <pre id="output">Click the button to get summary...</pre>
+  <div style="flex: 1; overflow-y: auto;">
+    <h2>🧠 Omega AI Panel</h2>
+
+    <div class="button-row">
+      <button id="summarizeBtn">Summarize Page</button>
+    </div>
+
+    <pre id="output">Click "Summarize Page" to get a summary...</pre>
+
+    <hr />
+
+    <div id="answerSection">
+      <h4>Answer:</h4>
+      <p id="answerText">Your answer will appear here...</p>
+    </div>
+  </div>
+
+  <!-- 💬 Ask Section Fixed at Bottom -->
+  <div class="ask-wrapper">
+    <textarea id="questionInput" placeholder="Ask a question about this page..." rows="2"></textarea>
+    <div class="ask-row">
+      <div style="flex: 1;"></div>
+      <button id="askBtn">Ask</button>
+    </div>
+  </div>
+
   <script src="sidepanel.js"></script>
 </body>
 </html>
